@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxeltr0a3ngse"]
+
+[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="1_88atg"]
+[ext_resource type="Script" path="res://code/enemy.gd" id="1_n2jwp"]
+[ext_resource type="Script" path="res://code/Hurtbox_detection.gd" id="3_wwdpe"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hwn3i"]
+radius = 48.0104
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x6dlo"]
+radius = 51.0882
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_n2jwp")
+
+[node name="Slime" parent="." instance=ExtResource("1_88atg")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_hwn3i")
+
+[node name="Hurtbox_detection" type="Area2D" parent="."]
+script = ExtResource("3_wwdpe")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox_detection"]
+position = Vector2(0, -27)
+shape = SubResource("CircleShape2D_x6dlo")
+
+[connection signal="body_entered" from="Hurtbox_detection" to="." method="_on_hurtbox_detection_body_entered"]
+[connection signal="body_entered" from="Hurtbox_detection" to="Hurtbox_detection" method="_on_body_entered"]

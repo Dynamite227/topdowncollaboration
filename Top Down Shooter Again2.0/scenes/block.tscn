@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://gah3m1nc1wbq"]
+
+[ext_resource type="Script" path="res://code/Hurtbox_detection.gd" id="1_i1lup"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ri4hp"]
+size = Vector2(20, 1129)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ji52c"]
+size = Vector2(1932.5, 25)
+
+[node name="border" type="Area2D"]
+script = ExtResource("1_i1lup")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 554.5)
+shape = SubResource("RectangleShape2D_ri4hp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(1910, 543)
+shape = SubResource("RectangleShape2D_ri4hp")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(974.75, 14.5)
+shape = SubResource("RectangleShape2D_ji52c")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(961, 1075)
+shape = SubResource("RectangleShape2D_ji52c")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
