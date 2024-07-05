@@ -1,4 +1,0 @@
-extends Area2D
-
-# THIS SCRIPT JUST STORES PLAYER VARIABLE FOR USE IN BULLET SCRIPT.
-@onready var player := $".."
