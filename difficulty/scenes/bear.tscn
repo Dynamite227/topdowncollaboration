@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://fttbxdxwsndf"]
+
+[ext_resource type="Script" path="res://code/bear.gd" id="1_b86hx"]
+[ext_resource type="Script" path="res://code/Hurtbox_detection.gd" id="2_p8li8"]
+[ext_resource type="StyleBox" uid="uid://btwf4g6s2xing" path="res://UI Resources/progress_bar_background.tres" id="3_rr4nu"]
+[ext_resource type="Texture2D" uid="uid://cwlhe4crtyc51" path="res://placeholders/pexels-pixabay-264907.jpg" id="4_nvi7s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hwn3i"]
+radius = 105.043
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x6dlo"]
+radius = 104.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7dqm"]
+bg_color = Color(0.968627, 0.113725, 0.239216, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="Bear" type="CharacterBody2D" groups=["enemy", "hard"]]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_b86hx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hwn3i")
+
+[node name="Hurtbox_detection" type="Area2D" parent="."]
+script = ExtResource("2_p8li8")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox_detection"]
+shape = SubResource("CircleShape2D_x6dlo")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="ProgressBar" parent="UI/Health"]
+layout_mode = 0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = -104.0
+theme_override_styles/background = ExtResource("3_rr4nu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b7dqm")
+value = 50.0
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, -3)
+scale = Vector2(0.274978, 0.405152)
+texture = ExtResource("4_nvi7s")
+
+[connection signal="body_entered" from="Hurtbox_detection" to="." method="_on_hurtbox_detection_body_entered" flags=18]
+[connection signal="body_entered" from="Hurtbox_detection" to="Hurtbox_detection" method="_on_body_entered" flags=18]

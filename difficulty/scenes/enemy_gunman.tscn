@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://cg4vpw2p7ijb3"]
+
+[ext_resource type="Script" path="res://code/EnemyShoot.gd" id="1_kqcwa"]
+[ext_resource type="Texture2D" uid="uid://d147gwmetyb4b" path="res://placeholders/pexels-daniele-la-rosa-messina-1626789-20741981.jpg" id="2_0ecsh"]
+[ext_resource type="Script" path="res://code/Hurtbox_detection.gd" id="3_fh7gn"]
+[ext_resource type="PackedScene" uid="uid://d2lxra1fevbay" path="res://scenes/gun.tscn" id="4_v35hv"]
+[ext_resource type="StyleBox" uid="uid://btwf4g6s2xing" path="res://UI Resources/progress_bar_background.tres" id="5_3cfm7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hwn3i"]
+radius = 48.0104
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x6dlo"]
+radius = 51.0882
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qsuim"]
+radius = 1000.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vyfiy"]
+bg_color = Color(0.968627, 0.113725, 0.239216, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="EnemyGunman" type="CharacterBody2D" groups=["enemy", "medium"]]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_kqcwa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -27)
+scale = Vector2(0.15625, 0.105477)
+texture = ExtResource("2_0ecsh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_hwn3i")
+
+[node name="Hurtbox_detection" type="Area2D" parent="."]
+script = ExtResource("3_fh7gn")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Hurtbox_detection"]
+position = Vector2(0, -27)
+shape = SubResource("CircleShape2D_x6dlo")
+
+[node name="WeaponHolder" type="Marker2D" parent="."]
+
+[node name="Gun" parent="WeaponHolder" instance=ExtResource("4_v35hv")]
+position = Vector2(93, -12)
+rotation = 0.00658154
+
+[node name="timeBetweenShots" type="Timer" parent="."]
+
+[node name="Range" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_qsuim")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="ProgressBar" parent="UI/Health"]
+layout_mode = 0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = -104.0
+theme_override_styles/background = ExtResource("5_3cfm7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vyfiy")
+value = 50.0
+show_percentage = false
+
+[connection signal="body_entered" from="Hurtbox_detection" to="." method="_on_hurtbox_detection_body_entered"]
+[connection signal="body_entered" from="Hurtbox_detection" to="Hurtbox_detection" method="_on_body_entered"]
+[connection signal="timeout" from="timeBetweenShots" to="." method="_on_time_between_shots_timeout"]
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]

@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://bdmrcj4xkr21p"]
+
+[ext_resource type="Script" path="res://code/game_scene.gd" id="1_3v4uc"]
+[ext_resource type="PackedScene" uid="uid://coqb0sbyl8oty" path="res://scenes/player.tscn" id="1_ih5q5"]
+[ext_resource type="Texture2D" uid="uid://buqb4ssadcjs5" path="res://placeholders/pexels-stephanthem-753869.jpg" id="2_10ccg"]
+[ext_resource type="Script" path="res://code/shake.gd" id="3_8nxld"]
+[ext_resource type="AudioStream" uid="uid://bnmcuvbivs4li" path="res://sounds/622226__jamestheballoon__ville-nousiainen-fight-music-remix.ogg" id="3_o7lqf"]
+[ext_resource type="PackedScene" uid="uid://c5jtduk1glwc3" path="res://scenes/enemy_spawner.tscn" id="4_qul07"]
+[ext_resource type="PackedScene" uid="uid://t75ynkf6hgc3" path="res://scenes/main_menu.tscn" id="5_8rcjp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5cglt"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_3v4uc")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundLayer"]
+position = Vector2(946.285, 531.638)
+scale = Vector2(6.06483, 6.06483)
+texture = ExtResource("2_10ccg")
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_ih5q5")]
+position = Vector2(952, 526)
+physics_material_override = SubResource("PhysicsMaterial_5cglt")
+
+[node name="mainView" type="Camera2D" parent="."]
+position = Vector2(954, 534)
+scale = Vector2(39.25, 39.25)
+zoom = Vector2(0.505, 0.505)
+editor_draw_limits = true
+script = ExtResource("3_8nxld")
+randomStrength = 15.0
+
+[node name="music" type="AudioStreamPlayer2D" parent="mainView"]
+position = Vector2(-8, 5)
+stream = ExtResource("3_o7lqf")
+autoplay = true
+
+[node name="Spawner" parent="." instance=ExtResource("4_qul07")]
+position = Vector2(526, 384)
+scale = Vector2(1, 0.895)
+
+[node name="MainMenu" parent="." instance=ExtResource("5_8rcjp")]
+
+[connection signal="end_game" from="Player" to="." method="_on_player_end_game"]
