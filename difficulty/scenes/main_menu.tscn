@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://t75ynkf6hgc3"]
+
+[ext_resource type="Script" path="res://code/main_menu.gd" id="1_fbgjc"]
+[ext_resource type="FontFile" uid="uid://b7kmceaj0qb6r" path="res://fonts/Xolonium-Regular.ttf" id="1_gmga4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ta5ss"]
+font = ExtResource("1_gmga4")
+font_size = 100
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_fbgjc")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -784.0
+offset_top = -484.0
+offset_right = 664.0
+offset_bottom = -118.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Long live the legless farmer who didn't live long."
+label_settings = SubResource("LabelSettings_ta5ss")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RestartButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.0
+offset_top = 49.0
+offset_right = 199.0
+offset_bottom = 118.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_gmga4")
+theme_override_font_sizes/font_size = 50
+text = "resow the land"
+
+[node name="QuitButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = 245.0
+offset_right = 135.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_gmga4")
+theme_override_font_sizes/font_size = 50
+text = "give those government pigs what they want"
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
